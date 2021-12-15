@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #ball{
+            background-color: brown;
+            border: none;
+            color: #fff;
+            padding: 20px;
+            display: inline-block;
+            width: 40px;
+
+        }
+    </style>
+</head>
+<body>
+    <!-- <script src="./index.js">
+    </script> -->
+    <div id="ball">Ball</div> 
+    <script>
+
+        window.onload = function(){
+            var ball = document.getElementById('ball');
+            
+
+            ball.ondragstart = function(e){
+                return false;
+            }
+
+            ball.onmousedown = function(ev){
+
+                var shiftLeft = ev.clientX - ball.getBoundingClientRect().left;
+                var shiftRight = ev.clientY - ball.getBoundingClientRect().top;
+
+                ball.style.position = 'absolute';
+                ball.style.zIndex = '1000';
+
+                console.log(ev);
+
+                document.body.append(ball);
+
+                function moveAt(ev){
+                    ball.style.left = ev.pageX - shiftLeft + 'px';
+                    ball.style.top = ev.pageY - shiftRight + 'px';
+                }
+
+                moveAt(ev);
+
+                function onMouseMove(e){
+                    moveAt(e);
+                }
+
+                document.addEventListener('mousemove', onMouseMove)
+
+
+                ball.onmouseup = function(e){
+                    document.removeEventListener('mousemove', onMouseMove);
+                    
+                    ball.onmouseup = null;
+                }
+            }
+
+        
+
+
+
+
+
+
+        // ball.onmousedown = function(event) {
+        //     // (1) prepare to moving: make absolute and on top by z-index
+        //     ball.style.position = 'absolute';
+        //     ball.style.zIndex = 1000;
+
+        //     // move it out of any current parents directly into body
+        //     // to make it positioned relative to the body
+        //     document.body.append(ball);
+
+        //     // centers the ball at (pageX, pageY) coordinates
+        //     function moveAt(pageX, pageY) {
+        //     ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+        //     ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+        //     }
+
+        //     // move our absolutely positioned ball under the pointer
+        //     moveAt(event.pageX, event.pageY);
+
+        //     function onMouseMove(event) {
+        //     moveAt(event.pageX, event.pageY);
+        //     }
+
+        //     // (2) move the ball on mousemove
+        //     document.addEventListener('mousemove', onMouseMove);
+
+        //     // (3) drop the ball, remove unneeded handlers
+        //     ball.onmouseup = function() {
+        //     document.removeEventListener('mousemove', onMouseMove);
+        //     ball.onmouseup = null;
+        //     };
+        // };
+        }
+        
+        
+    </script>
+
+    
+</body>
+</html>
